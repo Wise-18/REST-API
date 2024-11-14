@@ -1,0 +1,65 @@
+﻿@* WW_XXX.UI/Areas/Admin/Pages/Edit.cshtml *@
+@page "{id:int}"
+@using WW_XXX.UI.Areas.Admin.Pages
+@model EditModel
+@{
+    ViewData["Title"] = "Редактирование блюда";
+}
+
+<h1>Редактирование блюда</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Product.Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Product.Name" class="control-label">Название</label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Product.Description" class="control-label">Описание</label>
+                <textarea asp-for="Product.Description" class="form-control"></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Product.Calories" class="control-label">Калории</label>
+                <input asp-for="Product.Calories" class="form-control" type="number" />
+                <span asp-validation-for="Product.Calories" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Product.CategoryId" class="control-label">Категория</label>
+                <select asp-for="Product.CategoryId" class="form-control">
+                    @foreach (var category in Model.Categories)
+
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                @if (!string.IsNullOrEmpty(Model.Product.Image))
+
+                {
+                    <div class="mb-2">
+                        <img src="/images/@Model.Product.Image" alt="Current image" style="max-width: 200px;" />
+                    </div>
+                }
+                <label asp-for="ImageFile" class="control-label">Новое изображение</label>
+                <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a asp-page="./Index" class="btn btn-secondary">Назад к списку</a>
+            </div>
+        </form>
+    </div>
+</div>

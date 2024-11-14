@@ -1,0 +1,5 @@
+﻿@model CartInfoViewModel
+<a class="cart-info" asp-controller="Cart" asp-action="Index">
+    <i class="fas fa-shopping-cart"></i>
+    <span>@Model.TotalPrice.ToString("C") (@Model.ItemCount)</span>
+</a>

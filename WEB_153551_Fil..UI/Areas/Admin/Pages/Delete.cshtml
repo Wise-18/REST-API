@@ -1,0 +1,42 @@
+﻿@* WW_XXX.UI/Areas/Admin/Pages/Delete.cshtml *@
+@page "{id:int}"
+@using WW_XXX.UI.Areas.Admin.Pages
+@model DeleteModel
+@{
+    ViewData["Title"] = "Удаление блюда";
+}
+
+<h1>Удаление блюда</h1>
+
+<h3>Вы уверены, что хотите удалить это блюдо?</h3>
+<div class="row">
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-3">Название</dt>
+            <dd class="col-sm-9">@Model.Product.Name</dd>
+
+            <dt class="col-sm-3">Описание</dt>
+            <dd class="col-sm-9">@Model.Product.Description</dd>
+
+            <dt class="col-sm-3">Калории</dt>
+            <dd class="col-sm-9">@Model.Product.Calories</dd>
+
+            <dt class="col-sm-3">Категория</dt>
+            <dd class="col-sm-9">@Model.Product.Category?.Name</dd>
+
+            @if (!string.IsNullOrEmpty(Model.Product.Image))
+            {
+                <dt class="col-sm-3">Изображение</dt>
+                <dd class="col-sm-9">
+                    <img src="/images/@Model.Product.Image" alt="@Model.Product.Name" style="max-width: 200px;" />
+                </dd>
+            }
+        </dl>
+
+        <form method="post">
+            <input type="hidden" asp-for="Product.Id" />
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <a asp-page="./Index" class="btn btn-secondary">Назад к списку</a>
+        </form>
+    </div>
+</div>

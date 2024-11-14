@@ -1,0 +1,23 @@
+﻿<div class="navbar-nav align-items-center">
+    <a href="#" class="cart-info me-3">
+        <span class="text-secondary">00.0 руб. &#x1F6D2; (0)</span>
+    </a>
+    <div class="nav-item dropdown user-dropdown">
+        <a class="nav-link dropdown-toggle d-flex align-items-center bg-secondary rounded px-2" href="#" data-bs-toggle="dropdown">
+            <span class="text-white me-1">User@gmail.com</span>
+            <img src="~/Images/avatar.png" class="avatar-small" alt="User avatar" />
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+            <div class="dropdown-user-info d-flex align-items-center p-3">
+                <img src="~/Images/avatar.png" class="avatar-medium me-3" alt="User avatar" />
+                <div>user@gmail.com</div>
+            </div>
+            <div class="dropdown-divider m-0"></div>
+            <div class="dropdown-item">
+                <form asp-controller="Account" asp-action="LogOut" method="post">
+                    <button type="submit" class="btn btn-link text-dark text-decoration-none w-100 text-start">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

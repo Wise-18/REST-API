@@ -1,0 +1,98 @@
+﻿@model ListModel<Dish>
+@{
+    ViewData["Title"] = "Каталог блюд";
+}
+
+<h1>Каталог блюд</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+}
+
+<div class="row mb-3">
+    <div class="col">
+        <div class="btn-group">
+            <a asp-action="Index" class="btn btn-outline-secondary @(string.IsNullOrEmpty(ViewBag.CurrentCategory) ? "active" : "")">Все</a>
+            @if (ViewBag.Categories != null)
+            {
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <a asp-action="Index"
+                       asp-route-category="@category.NormalizedName"
+                       class="btn btn-outline-secondary @(ViewBag.CurrentCategory == category.NormalizedName ? "active" : "")">
+                        @category.Name
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @if (Model?.Items != null)
+    {
+        @foreach (var dish in Model.Items)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(dish.Image))
+                    {
+                        <img src="/images/@dish.Image" class="card-img-top" alt="@dish.Name">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@dish.Name</h5>
+                        <p class="card-text">@dish.Description</p>
+                        <p class="card-text">
+                            <small class="text-muted">@dish.Calories калорий</small>
+                        </p>
+                        <a href="#" class="btn btn-primary">В корзину</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@if (Model?.TotalPages > 1)
+{
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul class="pagination">
+                @{
+                    var prevDisabled = Model.CurrentPage == 1 ? "disabled" : "";
+                    var nextDisabled = Model.CurrentPage == Model.TotalPages ? "disabled" : "";
+                }
+
+                <li class="page-item @prevDisabled">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-pageNo="@(Model.CurrentPage - 1)"
+                       asp-route-category="@ViewBag.CurrentCategory">
+                        Предыдущая
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-pageNo="@i"
+                           asp-route-category="@ViewBag.CurrentCategory">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                <li class="page-item @nextDisabled">
+                    <a class="page-link" asp-action="Index"
+                       asp-route-pageNo="@(Model.CurrentPage + 1)"
+                       asp-route-category="@ViewBag.CurrentCategory">
+                        Следующая
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}
